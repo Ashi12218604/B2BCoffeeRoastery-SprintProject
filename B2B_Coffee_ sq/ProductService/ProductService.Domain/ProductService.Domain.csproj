@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+      <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <MicrosoftExtensionsLoggingGenerators_IsDisabled>true</MicrosoftExtensionsLoggingGenerators_IsDisabled>
+  </PropertyGroup>
+
+</Project>

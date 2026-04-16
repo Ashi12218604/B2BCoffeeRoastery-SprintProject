@@ -1,0 +1,179 @@
+<div class="admin-products-page" *ngIf="(user$ | async) as user">
+  <div class="page-header animate-fade-in-up">
+    <div>
+      <h1 class="page-title">Product <span class="highlight">Management</span></h1>
+      <p class="page-sub">Manage your coffee catalog</p>
+    </div>
+    <button class="btn-primary" *ngIf="user.role === 'SuperAdmin'" (click)="openCreateModal()">
+      <span>+ Add New Product</span>
+    </button>
+  </div>
+
+  <div class="toolbar animate-fade-in-up stagger-1">
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M13 13L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search products..." class="search-input" id="admin-product-search"/>
+    </div>
+  </div>
+
+  <div class="loading-state" *ngIf="loading$ | async">
+    <div class="spinner-lg"></div><p>Loading products...</p>
+  </div>
+
+  <div class="products-table-wrap" *ngIf="(products$ | async) as products">
+    <table class="data-table" *ngIf="filterProducts(products).length > 0">
+      <thead>
+        <tr>
+          <th>Product</th><th>SKU</th><th>Category</th><th>Description</th><th>Price</th><th>Weight</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filterProducts(products)" class="animate-fade-in-up" id="admin-product-{{ p.id }}">
+          <td class="product-cell">
+            <div class="product-thumb" *ngIf="!p.imageUrl">☕</div>
+            <img *ngIf="p.imageUrl" [src]="p.imageUrl" [alt]="p.name" class="product-thumb-img" />
+            <div>
+              <div class="product-name">{{ p.name }}</div>
+              <div class="product-origin">{{ p.origin }}</div>
+            </div>
+          </td>
+          <td class="sku-cell">{{ p.sku }}</td>
+          <td>{{ p.category }}</td>
+          <td class="desc-cell">{{ p.description | slice:0:30 }}...</td>
+          <td class="price-cell">
+            <span class="price">₹{{ p.price | number:'1.0-0' }}</span>
+            <span class="discounted" *ngIf="p.discountedPrice">₹{{ p.discountedPrice | number:'1.0-0' }}</span>
+          </td>
+          <td>{{ p.weightInGrams }}g</td>
+          <td>
+            <button class="status-toggle" [class.active]="p.isActive" (click)="toggleActive(p)">
+              {{ p.isActive ? 'Active' : 'Inactive' }}
+            </button>
+          </td>
+          <td>
+            <button class="btn-icon edit" (click)="editProduct(p)" title="View/Edit Details">
+              ✏️
+            </button>
+            <button class="btn-icon" (click)="openReviews(p)" title="View Reviews" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 4px;">
+              ⭐
+            </button>
+            <button class="btn-icon delete" *ngIf="user.role === 'SuperAdmin'" (click)="deleteProduct(p.id)" title="Delete">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="empty-state" *ngIf="filterProducts(products).length === 0 && !(loading$ | async)">
+      <div class="empty-icon">☕</div><h3>No products found</h3>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showCreateModal">
+    <div class="modal-content animate-fade-in-up">
+      <h2>{{ isEditing ? (user.role === 'SuperAdmin' ? 'Edit Product' : 'Product Details') : 'Create New Product' }}</h2>
+      
+      <div class="form-group full">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="newProduct.name" placeholder="E.g., Ethiopian Yirgacheffe" [disabled]="user.role !== 'SuperAdmin'" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>SKU</label>
+          <input type="text" [(ngModel)]="newProduct.sku" placeholder="E.g., ETH-YIR-01" [disabled]="user.role !== 'SuperAdmin'" />
+        </div>
+        <div class="form-group">
+          <label>Origin</label>
+          <input type="text" [(ngModel)]="newProduct.origin" placeholder="E.g., Ethiopia" [disabled]="user.role !== 'SuperAdmin'" />
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Description</label>
+        <textarea [(ngModel)]="newProduct.description" placeholder="Product details..." row="2" [disabled]="user.role !== 'SuperAdmin'" style="height: 60px;"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Weight (g)</label>
+          <input type="number" [(ngModel)]="newProduct.weightInGrams" [disabled]="user.role !== 'SuperAdmin'" />
+        </div>
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" [(ngModel)]="newProduct.price" [disabled]="user.role !== 'SuperAdmin'" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="newProduct.category" [disabled]="user.role !== 'SuperAdmin'">
+            <option value="SingleOrigin">SingleOrigin</option>
+            <option value="Blend">Blend</option>
+            <option value="Espresso">Espresso</option>
+            <option value="Decaf">Decaf</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Roast Level</label>
+          <select [(ngModel)]="newProduct.roastLevel" [disabled]="user.role !== 'SuperAdmin'">
+            <option value="Light">Light</option>
+            <option value="Medium">Medium</option>
+            <option value="Dark">Dark</option>
+            <option value="Espresso">Espresso</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeCreateModal()">{{ user.role === 'SuperAdmin' ? 'Cancel' : 'Close' }}</button>
+        <button class="btn-submit" *ngIf="user.role === 'SuperAdmin'" (click)="submitCreateProduct()">{{ isEditing ? 'Save Changes' : 'Add Product' }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Reviews Modal -->
+  <div class="modal-overlay" *ngIf="showReviewsModal" (click)="closeReviews()">
+    <div class="modal-content animate-fade-in-up" (click)="$event.stopPropagation()" style="max-width: 500px; padding: 24px; border-radius: 12px; background: white; max-height: 90vh; display: flex; flex-direction: column; gap: 20px;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <h2 style="margin: 0; font-family: 'Outfit', sans-serif; color: #4a3627; font-size: 1.5rem;">Reviews</h2>
+          <p style="margin: 4px 0 0; color: #8a7362; font-size: 0.9rem;">{{ selectedProductForReviews?.name }}</p>
+        </div>
+        <button (click)="closeReviews()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #8a7362;">✕</button>
+      </div>
+
+      <!-- Reviews List -->
+      <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding-right: 8px;">
+        <div *ngIf="loadingReviews" style="text-align: center; color: #8a7362; padding: 20px;">
+          Loading reviews...
+        </div>
+        
+        <div *ngIf="!loadingReviews && productReviews.length === 0" style="text-align: center; color: #8a7362; padding: 20px;">
+          No reviews found.
+        </div>
+
+        <div *ngFor="let review of productReviews" style="border-bottom: 1px solid #f0e6dd; padding-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <strong style="color: #4a3627; font-size: 0.95rem;">{{ review.clientName || 'Anonymous' }}</strong>
+            <span style="color: #8a7362; font-size: 0.85rem;">{{ review.createdAt | date:'mediumDate' }}</span>
+          </div>
+          <div style="margin-bottom: 8px; color: #f59e0b; font-size: 0.9rem;">
+            <ng-container *ngFor="let i of [1,2,3,4,5]">
+              <span *ngIf="i <= review.rating">★</span>
+              <span *ngIf="i > review.rating" style="color: #e5d8cd;">★</span>
+            </ng-container>
+          </div>
+          <p style="margin: 0; color: #5a4b41; font-size: 0.95rem; line-height: 1.5;">{{ review.comment }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

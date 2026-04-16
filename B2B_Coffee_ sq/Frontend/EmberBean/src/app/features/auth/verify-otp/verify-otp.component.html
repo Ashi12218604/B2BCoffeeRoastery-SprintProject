@@ -1,0 +1,71 @@
+<div class="login-universe">
+  <div class="bg-layer bg-image"></div>
+  <div class="bg-layer bg-overlay"></div>
+
+  <nav class="top-nav animate-fade-in">
+    <a routerLink="/login" class="nav-logo-text">E&B</a>
+  </nav>
+
+  <div class="register-container">
+    <!-- OTP Verified Success -->
+    <div class="login-panel animate-fade-in-up" *ngIf="otpVerified$ | async; else otpFormBlock" id="otp-success">
+      <div class="success-content">
+        <div class="success-icon">✓</div>
+        <h2 class="panel-title">Email Verified!</h2>
+        <p class="panel-subtitle">Your account is now pending admin approval. You'll receive an email once approved.</p>
+        <a routerLink="/login" class="btn-sign-in" style="display: inline-block; text-align: center; margin-top: 24px;">
+          BACK TO SIGN IN
+        </a>
+      </div>
+    </div>
+
+    <!-- OTP Form -->
+    <ng-template #otpFormBlock>
+      <div class="login-panel animate-fade-in-up" id="otp-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Verify Your Email</h2>
+          <p class="panel-subtitle">
+            We've sent a 6-digit code to
+            <strong class="highlight-email">{{ otpEmail$ | async }}</strong>
+          </p>
+        </div>
+
+        <div class="error-banner" *ngIf="(error$ | async) as error">
+          <span>{{ error }}</span>
+        </div>
+
+        <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" id="otp-form">
+          <div class="form-group">
+            <label class="form-label">VERIFICATION CODE</label>
+            <div class="input-wrapper otp-input">
+              <input
+                type="text"
+                formControlName="otpCode"
+                placeholder="000000"
+                maxlength="6"
+                autocomplete="one-time-code"
+                id="otpCode"
+              />
+            </div>
+            <div class="field-error" *ngIf="otpForm.get('otpCode')?.invalid && otpForm.get('otpCode')?.touched">
+              Enter the 6-digit code
+            </div>
+          </div>
+
+          <button type="submit" class="btn-sign-in" id="btn-verify" [disabled]="otpForm.invalid || (loading$ | async)">
+            <span *ngIf="!(loading$ | async)">VERIFY EMAIL</span>
+            <span *ngIf="loading$ | async" class="spinner-wrapper">
+              <span class="spinner"></span>VERIFYING...
+            </span>
+          </button>
+        </form>
+
+        <div class="panel-footer">
+          <p class="register-text">
+            Didn't receive the code? Check your spam folder.
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.API\DeliveryService.API.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\B2B.Contracts.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.Domain\DeliveryService.Domain.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.Application\DeliveryService.Application.csproj]
+  DeliveryService.Domain -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.Domain\bin\Debug\net10.0\DeliveryService.Domain.dll
+  B2B.Contracts -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\bin\Debug\net10.0\B2B.Contracts.dll
+  DeliveryService.Application -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.Application\bin\Debug\net10.0\DeliveryService.Application.dll
+  DeliveryService.Infrastructure -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.Infrastructure\bin\Debug\net10.0\DeliveryService.Infrastructure.dll
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.API\test.cs(1,65): error CS0260: Missing partial modifier on declaration of type 'Program'; another partial declaration of this type exists [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.API\DeliveryService.API.csproj]
+
+Build FAILED.
+
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.API\test.cs(1,65): error CS0260: Missing partial modifier on declaration of type 'Program'; another partial declaration of this type exists [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\DeliveryService\DeliveryService.API\DeliveryService.API.csproj]
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:03.11

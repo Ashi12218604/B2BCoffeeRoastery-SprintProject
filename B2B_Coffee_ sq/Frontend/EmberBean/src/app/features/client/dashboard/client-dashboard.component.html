@@ -1,0 +1,119 @@
+<div class="client-dash">
+  <!-- ═══ HERO SLIDESHOW ═══ -->
+  <section class="hero-slideshow" (click)="goToCatalog()">
+    <div class="slides-container">
+      <div *ngFor="let slide of coffeeSlides; let i = index"
+           class="slide" [class.active]="i === currentSlide">
+        <img [src]="slide.imageUrl" [alt]="slide.name" class="slide-img" />
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-origin">{{ slide.origin }}</span>
+          <h2 class="slide-name">{{ slide.name }}</h2>
+          <p class="slide-desc">{{ slide.description }}</p>
+          <button class="slide-cta">Explore in Catalog →</button>
+        </div>
+      </div>
+    </div>
+    <!-- Dots indicator -->
+    <div class="slide-dots">
+      <span *ngFor="let slide of coffeeSlides; let i = index"
+            class="dot" [class.active]="i === currentSlide"
+            (click)="goSlide(i); $event.stopPropagation()"></span>
+    </div>
+  </section>
+
+  <!-- ═══ STATS CARDS ═══ -->
+  <div class="stats-grid">
+    <div class="stat-card animate-fade-in-up stagger-1" id="stat-total-orders">
+      <div class="stat-icon orange">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6V20A2 2 0 005 22H19A2 2 0 0021 20V6L18 2H6Z" stroke="currentColor" stroke-width="1.5"/><path d="M3 6H21" stroke="currentColor" stroke-width="1.5"/><path d="M8 10A4 4 0 0016 10" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ (orders$ | async)?.length || 0 }}</span>
+        <span class="stat-label">Total Orders</span>
+      </div>
+    </div>
+
+    <div class="stat-card animate-fade-in-up stagger-2" id="stat-pending">
+      <div class="stat-icon blue">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ ((orders$ | async) || []) | filterStatus:'Pending' }}</span>
+        <span class="stat-label">Pending</span>
+      </div>
+    </div>
+
+    <div class="stat-card animate-fade-in-up stagger-3" id="stat-delivered">
+      <div class="stat-icon green">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ ((orders$ | async) || []) | filterStatus:'Delivered' }}</span>
+        <span class="stat-label">Delivered</span>
+      </div>
+    </div>
+
+    <div class="stat-card animate-fade-in-up stagger-4" id="stat-spending">
+      <div class="stat-icon copper">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2V22M17 5H9.5A3.5 3.5 0 009.5 12H14.5A3.5 3.5 0 0114.5 19H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">₹{{ getTotalSpending() | number:'1.0-0' }}</span>
+        <span class="stat-label">Total Spent</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BEST SELLERS ═══ -->
+  <div class="section animate-fade-in-up stagger-5">
+    <h2 class="section-title">🔥 Best Selling & Most Reordered</h2>
+    <div class="bestsellers-grid">
+      <div *ngFor="let coffee of bestSellers" class="bestseller-card" (click)="goToCatalog()">
+        <div class="bestseller-img-wrap">
+          <img [src]="coffee.imageUrl" [alt]="coffee.name" class="bestseller-img" />
+          <div class="bestseller-overlay">
+            <span class="bestseller-tag">Popular</span>
+          </div>
+        </div>
+        <div class="bestseller-info">
+          <h3 class="bestseller-name">{{ coffee.name }}</h3>
+          <p class="bestseller-origin">{{ coffee.origin }}</p>
+          <p class="bestseller-desc">{{ coffee.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RECENT ORDERS ═══ -->
+  <div class="section animate-fade-in-up stagger-6">
+    <h2 class="section-title">Recent Orders</h2>
+    <div class="orders-table-container" *ngIf="(orders$ | async) as orders">
+      <div class="empty-state" *ngIf="orders.length === 0">
+        <p>No orders yet. Browse our <a routerLink="/client/catalog" class="link">catalog</a> to get started.</p>
+      </div>
+      <table class="orders-table" *ngIf="orders.length > 0">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders.slice(0, 5)">
+            <td class="order-id">{{ order.id | slice:0:8 }}...</td>
+            <td>{{ order.placedAt | date:'mediumDate' }}</td>
+            <td>{{ order.items ? order.items.length : 0 }} items</td>
+            <td class="amount">₹{{ order.totalAmount | number:'1.2-2' }}</td>
+            <td><span class="badge" [class]="'badge-' + order.status.toLowerCase()">{{ order.status }}</span></td>
+            <td><span class="badge" [class]="'badge-pay-' + order.paymentStatus.toLowerCase()">{{ order.paymentStatus }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

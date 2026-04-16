@@ -1,0 +1,186 @@
+@use 'styles/variables' as *;
+@use 'styles/typography' as *;
+@use 'styles/glassmorphism' as *;
+
+.pending-page { max-width: 1000px; }
+
+.page-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 28px;
+}
+.page-title { @include heading-serif($text-3xl, 600); color: $velvet-crema; margin-bottom: 6px; }
+.highlight { color: $copper; }
+.page-sub { @include body-sans($text-sm, 400); color: #FDF5E6; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+
+.header-badge {
+  display: flex; flex-direction: column; align-items: center;
+  @include glass-panel; border-radius: $radius-md; padding: 12px 20px;
+}
+.badge-count { @include heading-serif(1.5rem, 700); color: #FFD54F; }
+.badge-label { @include label-sans(0.6rem, 500); color: $text-muted; letter-spacing: 0.1em; margin-top: 2px; }
+
+// ── Loading / Empty ──────────────────────────────────────
+.loading-state, .empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 80px 0; color: $text-muted; text-align: center;
+}
+.spinner-lg {
+  width: 40px; height: 40px; border: 3px solid rgba(184,115,51,0.2);
+  border-top: 3px solid $copper; border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin-bottom: 16px;
+}
+.empty-state {
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+  h3 { @include heading-serif($text-xl, 600); color: $velvet-crema; margin-bottom: 8px; }
+  p { @include body-sans($text-sm, 400); color: $text-muted; }
+  
+  &.artisan {
+    position: relative;
+    width: 100%; height: 400px;
+    border-radius: 16px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(184, 115, 51, 0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+  
+  .artisan-bg {
+    position: absolute; inset: -50%;
+    background: 
+      linear-gradient(rgba(184, 115, 51, 0.05) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(90deg, rgba(184, 115, 51, 0.05) 1px, transparent 1px) 0 0 / 40px 40px;
+    animation: panGrid 20s linear infinite;
+    transform: perspective(600px) rotateX(60deg) scale(2);
+  }
+  
+  .artisan-content {
+    position: relative; z-index: 10;
+    background: rgba(30, 20, 15, 0.6);
+    backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 40px; text-align: center;
+    transform: translateY(20px); opacity: 0;
+    animation: springUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
+  }
+}
+
+@keyframes panGrid { from { transform: perspective(600px) rotateX(60deg) translateY(0); } to { transform: perspective(600px) rotateX(60deg) translateY(40px); } }
+@keyframes springUp { to { transform: translateY(0); opacity: 1; } }
+
+// ── Client Cards ─────────────────────────────────────────
+.clients-list { display: flex; flex-direction: column; gap: 16px; }
+
+.client-card {
+  @include glass-panel;
+  border-radius: $radius-lg; padding: 24px; display: flex; align-items: center; gap: 20px;
+  transition: all $duration-normal $ease-smooth;
+  opacity: 0; animation: fadeInUp 0.5s $ease-smooth forwards;
+  &:hover { border-color: $glass-border-glow; transform: translateY(-1px); }
+}
+
+.client-avatar {
+  width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(184,115,51,0.3), rgba(255,191,0,0.2));
+  display: flex; align-items: center; justify-content: center;
+  @include body-sans($text-sm, 700); color: $copper;
+  border: 2px solid rgba(184,115,51,0.3);
+}
+
+.client-info { flex: 1; min-width: 0; }
+.client-name { @include heading-serif(1.1rem, 600); color: $velvet-crema; margin-bottom: 2px; }
+.client-company { @include body-sans($text-sm, 500); color: $copper; margin-bottom: 10px; }
+
+.client-meta {
+  display: flex; flex-wrap: wrap; gap: 16px;
+}
+.meta-item {
+  display: flex; align-items: center; gap: 6px;
+  @include body-sans($text-xs, 400); color: $text-muted;
+  svg { flex-shrink: 0; color: $text-muted; }
+  &.time { color: #FFD54F; svg { color: #FFD54F; } }
+}
+
+.client-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+.btn-approve {
+  padding: 10px 22px; border-radius: $radius-md;
+  background: rgba(46, 125, 50, 0.7); color: #fff;
+  border: 1px solid rgba(76, 175, 80, 0.8); cursor: pointer;
+  @include body-sans($text-sm, 700); letter-spacing: 0.04em;
+  transition: all $duration-fast $ease-smooth;
+  &:hover:not(:disabled) { background: rgba(46, 125, 50, 0.9); box-shadow: 0 0 15px rgba(76, 175, 80, 0.3); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-reject {
+  padding: 10px 22px; border-radius: $radius-md;
+  background: rgba(198, 40, 40, 0.7); color: #fff;
+  border: 1px solid rgba(244, 67, 54, 0.8); cursor: pointer;
+  @include body-sans($text-sm, 700); letter-spacing: 0.04em;
+  transition: all $duration-fast $ease-smooth;
+  &:hover:not(:disabled) { background: rgba(198, 40, 40, 0.9); box-shadow: 0 0 15px rgba(244, 67, 54, 0.3); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.btn-spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(129,199,132,0.3);
+  border-top: 2px solid #81C784; border-radius: 50%;
+  animation: spin 0.7s linear infinite; display: inline-block;
+}
+
+// ── Modal ────────────────────────────────────────────────
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px); display: flex; align-items: center;
+  justify-content: center; z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  @include glass-card;
+  width: 100%; max-width: 480px; margin: 20px;
+  animation: scaleIn 0.25s $ease-smooth;
+}
+
+.modal-title { @include heading-serif(1.3rem, 600); color: $velvet-crema; margin-bottom: 8px; }
+.modal-sub { @include body-sans($text-sm, 400); color: $text-muted; margin-bottom: 16px; }
+
+.modal-textarea {
+  @include glass-input;
+  resize: vertical; min-height: 80px;
+}
+
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;
+}
+
+.btn-modal-cancel {
+  padding: 10px 24px; border-radius: $radius-md;
+  background: transparent; color: $text-muted; border: 1px solid $border-subtle;
+  cursor: pointer; @include body-sans($text-sm, 500);
+  transition: all $duration-fast $ease-smooth;
+  &:hover { color: $velvet-crema; border-color: rgba(255,255,255,0.2); }
+}
+
+.btn-modal-confirm {
+  padding: 10px 24px; border-radius: $radius-md;
+  background: rgba(198, 40, 40, 0.5); color: #FFCDD2;
+  border: 1px solid rgba(244, 67, 54, 0.6); cursor: pointer;
+  @include body-sans($text-sm, 600);
+  transition: all $duration-fast $ease-smooth;
+  &:hover { background: rgba(198, 40, 40, 0.8); color: #fff; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@media (max-width: 768px) {
+  .client-card { flex-direction: column; align-items: flex-start; padding: 20px; }
+  .client-actions { width: 100%; }
+  .btn-approve, .btn-reject { flex: 1; text-align: center; }
+}

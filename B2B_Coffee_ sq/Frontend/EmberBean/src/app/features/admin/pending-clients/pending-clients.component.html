@@ -1,0 +1,100 @@
+<div class="pending-page">
+  <div class="page-header animate-fade-in-up">
+    <div>
+      <h1 class="page-title">Pending <span class="highlight">Clients</span></h1>
+      <p class="page-sub">Review and approve new partner registration requests</p>
+    </div>
+    <div class="header-badge" *ngIf="clients.length > 0">
+      <span class="badge-count">{{ clients.length }}</span>
+      <span class="badge-label">Awaiting Review</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner-lg"></div>
+    <p>Loading pending clients...</p>
+  </div>
+
+  <!-- Empty State with Artisan Video/Macro Image -->
+  <div class="empty-state artisan" *ngIf="!loading && clients.length === 0">
+    <div class="artisan-bg"></div>
+    <div class="artisan-content glass-card">
+      <div class="empty-icon">✅</div>
+      <h3>All caught up!</h3>
+      <p>No pending client registrations at the moment.</p>
+    </div>
+  </div>
+
+  <!-- Client Cards -->
+  <div class="clients-list" *ngIf="!loading && clients.length > 0">
+    <div
+      class="client-card animate-fade-in-up"
+      *ngFor="let client of clients; let i = index"
+      [style.animation-delay]="(i * 0.08) + 's'"
+      id="client-{{ client.id }}"
+    >
+      <div class="client-avatar">
+        {{ getInitials(client.fullName) }}
+      </div>
+      <div class="client-info">
+        <h3 class="client-name">{{ client.fullName }}</h3>
+        <p class="client-company">{{ client.companyName }}</p>
+        <div class="client-meta">
+          <span class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 5L8 9L14 5" stroke="currentColor" stroke-width="1.2"/></svg>
+            {{ client.email }}
+          </span>
+          <span class="meta-item">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 2H6L7.5 5.5L5.8 6.8C6.8 8.8 8.2 10.2 10.2 11.2L11.5 9.5L15 11V14C15 14.6 14.6 15 14 15C7 15 1 9 1 2C1 1.4 1.4 1 2 1" stroke="currentColor" stroke-width="1.2"/></svg>
+            {{ client.phoneNumber }}
+          </span>
+          <span class="meta-item time">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M8 4V8L10.5 10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            {{ getTimeSince(client.createdAt) }}
+          </span>
+        </div>
+      </div>
+      <div class="client-actions">
+        <button
+          class="btn-approve"
+          (click)="approveClient(client.id)"
+          [disabled]="actionLoading === client.id"
+          id="approve-{{ client.id }}"
+        >
+          <span *ngIf="actionLoading !== client.id">✓ Approve</span>
+          <span *ngIf="actionLoading === client.id" class="btn-spinner"></span>
+        </button>
+        <button
+          class="btn-reject"
+          (click)="showRejectModal(client.id)"
+          [disabled]="actionLoading === client.id"
+          id="reject-{{ client.id }}"
+        >
+          ✕ Reject
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection Modal -->
+  <div class="modal-overlay" *ngIf="rejectingClientId" (click)="cancelReject()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3 class="modal-title">Reject Client</h3>
+      <p class="modal-sub">Please provide a reason for rejection (optional):</p>
+      <textarea
+        [(ngModel)]="rejectionReason"
+        class="modal-textarea"
+        placeholder="Application does not meet requirements."
+        rows="3"
+        id="rejection-reason"
+      ></textarea>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelReject()">Cancel</button>
+        <button class="btn-modal-confirm" (click)="confirmReject()" [disabled]="actionLoading">
+          Confirm Rejection
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

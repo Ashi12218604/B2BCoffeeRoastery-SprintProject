@@ -1,0 +1,19 @@
+﻿C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\InventoryService.API.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\B2B.Contracts.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.Infrastructure\InventoryService.Infrastructure.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.Domain\InventoryService.Domain.csproj]
+  B2B.Contracts -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\bin\Debug\net10.0\B2B.Contracts.dll
+  InventoryService.Domain -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.Domain\bin\Debug\net10.0\InventoryService.Domain.dll
+  InventoryService.Application -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.Application\bin\Debug\net10.0\InventoryService.Application.dll
+  InventoryService.Infrastructure -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.Infrastructure\bin\Debug\net10.0\InventoryService.Infrastructure.dll
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\Controllers\InventoryController.cs(53,20): error CS0246: The type or namespace name 'UpsertInventoryDto' could not be found (are you missing a using directive or an assembly reference?) [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\InventoryService.API.csproj]
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\Controllers\InventoryController.cs(65,36): error CS0246: The type or namespace name 'RestockDto' could not be found (are you missing a using directive or an assembly reference?) [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\InventoryService.API.csproj]
+
+Build FAILED.
+
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\Controllers\InventoryController.cs(53,20): error CS0246: The type or namespace name 'UpsertInventoryDto' could not be found (are you missing a using directive or an assembly reference?) [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\InventoryService.API.csproj]
+C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\Controllers\InventoryController.cs(65,36): error CS0246: The type or namespace name 'RestockDto' could not be found (are you missing a using directive or an assembly reference?) [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\InventoryService\InventoryService.API\InventoryService.API.csproj]
+    0 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:01.97

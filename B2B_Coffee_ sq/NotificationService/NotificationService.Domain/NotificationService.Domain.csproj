@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\B2B.Contracts\B2B.Contracts.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+      <MicrosoftExtensionsLoggingGenerators_IsDisabled>true</MicrosoftExtensionsLoggingGenerators_IsDisabled>
+      <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <MicrosoftExtensionsLoggingGenerators_IsDisabled>true</MicrosoftExtensionsLoggingGenerators_IsDisabled>
+  </PropertyGroup>
+
+</Project>

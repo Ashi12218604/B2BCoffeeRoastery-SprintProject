@@ -1,0 +1,113 @@
+<div class="login-universe">
+  <!-- ═══ BACKGROUND LAYERS ═══ -->
+  <div class="bg-layer bg-image"></div>
+  <div class="bg-layer bg-overlay"></div>
+
+  <!-- ═══ NAVIGATION BAR ═══ -->
+  <nav class="top-nav animate-fade-in">
+    <div class="nav-left">
+      <a routerLink="/login" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+        <img src="/assets/images/brand-logo.png" alt="Ember & Bean Logo" class="nav-brand-logo">
+        <span class="nav-brand-text">Ember <span class="nav-amp">&</span> Bean</span>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/login" class="nav-link">Sign In</a>
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN LAYOUT ═══ -->
+  <div class="login-container">
+    <div class="login-panel animate-fade-in-up" id="register-panel">
+      
+      <div class="panel-header">
+        <div class="brand-logo-wrapper">
+          <img src="/assets/images/brand-logo.png" alt="Ember & Bean Logo" class="auth-brand-logo">
+          <h1 class="auth-brand-name">Ember <span class="auth-amp">&</span> Bean</h1>
+          <span class="auth-tagline">Artisan Coffee Roasters</span>
+        </div>
+        <h2 class="panel-title">Request Access</h2>
+        <p class="panel-subtitle">Join the Ember & Bean partner network</p>
+      </div>
+
+      <!-- Error Message -->
+      <div class="error-banner" *ngIf="(error$ | async) as error">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 4.5V8.5M8 10.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>{{ error }}</span>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" id="register-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">FULL NAME</label>
+            <div class="input-wrapper" [class.error]="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+              <input type="text" formControlName="fullName" placeholder="John Doe" id="fullName"/>
+            </div>
+            <div class="field-error" *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+              Full name is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">COMPANY</label>
+            <div class="input-wrapper" [class.error]="registerForm.get('companyName')?.invalid && registerForm.get('companyName')?.touched">
+              <input type="text" formControlName="companyName" placeholder="Coffee Co." id="companyName"/>
+            </div>
+            <div class="field-error" *ngIf="registerForm.get('companyName')?.invalid && registerForm.get('companyName')?.touched">
+              Company name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">EMAIL ADDRESS</label>
+          <div class="input-wrapper" [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <input type="email" formControlName="email" placeholder="you@company.com" id="email"/>
+          </div>
+          <div class="field-error" *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">
+            Enter a valid email address
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">PHONE NUMBER</label>
+          <div class="input-wrapper" [class.error]="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched">
+            <input type="tel" formControlName="phoneNumber" placeholder="10-digit number" id="phoneNumber" maxlength="10"/>
+          </div>
+          <div class="field-error" *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched">
+            Valid 10-digit phone number is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">PASSWORD</label>
+          <div class="input-wrapper" [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Min. 6 characters" id="password"/>
+            <button type="button" class="toggle-password" (click)="togglePassword()" tabindex="-1">
+              {{ showPassword ? '🔓' : '🔒' }}
+            </button>
+          </div>
+          <div class="field-error" *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">
+            Password must be at least 6 characters
+          </div>
+        </div>
+
+        <button type="submit" class="btn-sign-in" id="btn-register" [disabled]="registerForm.invalid || (loading$ | async)">
+          <span *ngIf="!(loading$ | async)">REQUEST ACCESS</span>
+          <span *ngIf="loading$ | async" class="spinner-wrapper">
+            <span class="spinner"></span>SENDING OTP...
+          </span>
+        </button>
+      </form>
+
+      <div class="panel-footer">
+        <p class="register-text">
+          Already have an account? <a routerLink="/login" class="register-link">Sign In</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

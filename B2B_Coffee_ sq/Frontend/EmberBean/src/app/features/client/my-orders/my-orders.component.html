@@ -1,0 +1,98 @@
+<div class="orders-page">
+  <div class="page-header animate-fade-in-up">
+    <h1 class="page-title">My <span class="highlight">Orders</span></h1>
+    <p class="page-sub">Track and manage all your orders in one place</p>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="loading$ | async">
+    <div class="spinner-lg"></div>
+    <p>Loading orders...</p>
+  </div>
+
+  <div class="orders-container" *ngIf="(orders$ | async) as orders">
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="orders.length === 0 && !(loading$ | async)">
+      <div class="empty-icon">📦</div>
+      <h3>No orders yet</h3>
+      <p>Browse our catalog and place your first order</p>
+    </div>
+
+    <!-- Order Cards -->
+    <div
+      class="order-card animate-fade-in-up"
+      *ngFor="let order of orders; let i = index; trackBy: trackEvent"
+      [class.expanded]="selectedOrder?.id === order.id"
+      [style.animation-delay]="(i * 0.06) + 's'"
+      (click)="selectOrder(order)"
+      id="order-{{ order.id }}"
+    >
+      <!-- Order Header Row -->
+      <div class="order-header">
+        <div class="order-id-block">
+          <span class="order-label">ORDER</span>
+          <span class="order-id">#{{ order.id.substring(0, 8).toUpperCase() }}</span>
+        </div>
+        <div class="order-date">
+          {{ order.placedAt | date:'MMM dd, yyyy' }}
+        </div>
+        <div class="order-status-badge" [class]="getStatusClass(order.status)">
+          <span class="status-icon">{{ getStatusIcon(order.status) }}</span>
+          {{ order.status }}
+        </div>
+        <div class="order-total">
+          ₹{{ order.totalAmount | number:'1.2-2' }}
+        </div>
+        <div class="expand-icon" [class.rotated]="selectedOrder?.id === order.id">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Expanded Detail -->
+      <div class="order-detail" *ngIf="selectedOrder?.id === order.id" (click)="$event.stopPropagation()">
+        
+        <div class="detail-section" *ngIf="order.rejectionReason">
+          <h4 style="color: #EF5350;">Reason for {{ order.status }}</h4>
+          <p style="color: #EF5350; margin: 0; font-size: 0.9rem; font-style: italic;">{{ order.rejectionReason }}</p>
+        </div>
+
+        <div class="detail-section">
+          <h4>Items Ordered</h4>
+          <div class="items-table">
+            <div class="item-row header-row">
+              <span>Product</span>
+              <span>Qty</span>
+              <span>Unit Price</span>
+              <span>Subtotal</span>
+            </div>
+            <div class="item-row" *ngFor="let item of order.items">
+              <span class="item-name">{{ item.productName }}</span>
+              <span>{{ item.quantity }}</span>
+              <span>₹{{ item.unitPrice | number:'1.2-2' }}</span>
+              <span>₹{{ (item.quantity * item.unitPrice) | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-footer">
+          <div class="detail-meta">
+            <span *ngIf="order.companyName"><strong>Company:</strong> {{ order.companyName }}</span>
+            <span *ngIf="order.paymentStatus"><strong>Payment:</strong> {{ order.paymentStatus }}</span>
+          </div>
+          <div class="detail-actions">
+            <button
+              class="btn-cancel"
+              *ngIf="order.status === 'Pending' || order.status === 'Confirmed'"
+              (click)="cancelOrder(order.id)"
+              id="cancel-{{ order.id }}"
+            >
+              Cancel Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

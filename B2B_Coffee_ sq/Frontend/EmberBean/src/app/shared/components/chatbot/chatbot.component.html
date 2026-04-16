@@ -1,0 +1,47 @@
+<div class="chatbot-container" [class.open]="isOpen">
+  <!-- Trigger Button -->
+  <button class="chat-trigger" (click)="toggleChat()">
+    <span *ngIf="!isOpen">💬</span>
+    <span *ngIf="isOpen">✕</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-window" *ngIf="isOpen">
+    <div class="chat-header">
+      <div class="header-info">
+        <div class="avatar">EB</div>
+        <div>
+          <h3>Coffee Assistant</h3>
+          <span class="status">Online • Groq Powered</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div *ngFor="let msg of messages" class="message-wrapper" [class.user]="msg.isUser">
+        <div class="message-bubble">
+          {{ msg.text }}
+          <span class="message-time">{{ msg.time | date:'shortTime' }}</span>
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="message-wrapper">
+        <div class="message-bubble typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-footer">
+      <input 
+        type="text" 
+        [(ngModel)]="userInput" 
+        (keyup.enter)="sendMessage()" 
+        placeholder="Ask anything about our coffee..."
+        [disabled]="isLoading"
+      />
+      <button (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
+        ➔
+      </button>
+    </div>
+  </div>
+</div>

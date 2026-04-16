@@ -1,0 +1,126 @@
+<div class="dashboard-shell" [class.collapsed]="sidebarCollapsed">
+  <aside class="sidebar" id="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="brand" *ngIf="!sidebarCollapsed">
+        <div class="brand-logo-container">
+          <img src="/assets/images/brand-logo.jpg" alt="Ember & Bean Logo" class="brand-logo-img">
+        </div>
+        <!-- Replaced text-based brand with full circular brand logo -->
+        <!-- <span class="brand-name">Ember <span class="amp">&</span> Bean</span>
+        <span class="brand-tagline">Artisan Coffee Roasters</span> -->
+        <span class="brand-sub">Admin Portal</span>
+      </div>
+      <div class="brand-collapsed" *ngIf="sidebarCollapsed">
+        <img src="/assets/images/brand-logo.png" alt="E&B" class="brand-logo-collapsed">
+      </div>
+      <button class="toggle-btn" (click)="toggleSidebar()" id="admin-sidebar-toggle">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 4.5H15M3 9H15M3 13.5H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item" id="admin-nav-dashboard">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Dashboard</span>
+      </a>
+      <a routerLink="/admin/pending-clients" routerLinkActive="active" class="nav-item" id="admin-nav-clients">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14 17V15.667C14 14.954 13.719 14.271 13.219 13.771C12.719 13.271 12.035 13 11.333 13H4.667C3.954 13 3.271 13.281 2.771 13.781C2.271 14.281 2 14.965 2 15.667V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M16 7V13M13 10H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Pending Clients</span>
+      </a>
+      <a routerLink="/admin/clients" routerLinkActive="active" class="nav-item" id="admin-nav-approved-clients">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM7 9a3 3 0 116 0 3 3 0 01-6 0z" stroke="currentColor" stroke-width="1.5"/><path d="M14 15.5a8 8 0 00-8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Clients</span>
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="active" class="nav-item" id="admin-nav-products">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16 3H4A2 2 0 002 5V15A2 2 0 004 17H16A2 2 0 0018 15V5A2 2 0 0016 3Z" stroke="currentColor" stroke-width="1.5"/><path d="M6 8H14M6 12H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Products</span>
+      </a>
+      <a routerLink="/admin/inventory" routerLinkActive="active" class="nav-item" id="admin-nav-inventory">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17 5L10 1L3 5V15L10 19L17 15V5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 19V10M10 10L3 6M10 10L17 6" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Inventory</span>
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="active" class="nav-item" id="admin-nav-orders">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 2L3 5V17A1 1 0 004 18H16A1 1 0 0017 17V5L15 2H5Z" stroke="currentColor" stroke-width="1.5"/><path d="M3 5H17" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Orders</span>
+      </a>
+      <a routerLink="/admin/deliveries" routerLinkActive="active" class="nav-item" id="admin-nav-deliveries">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M13 2H3V13H13V2Z" stroke="currentColor" stroke-width="1.5"/><path d="M13 6H16L18 9V13H13V6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="6.5" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/><circle cx="15.5" cy="15.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Deliveries</span>
+      </a>
+      <a *ngIf="(user$ | async)?.role === 'SuperAdmin'" routerLink="/admin/create-admin" routerLinkActive="active" class="nav-item" id="admin-nav-create-admin">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L16 8M10 14H4M4 14L4 8L14 2L18 6L8 16L4 16L4 14Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="nav-text" *ngIf="!sidebarCollapsed">Manage Admins</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info" *ngIf="(user$ | async) as user">
+        <div class="user-avatar admin-avatar">{{ user.fullName.charAt(0) || 'A' }}</div>
+        <div class="user-details" *ngIf="!sidebarCollapsed">
+          <span class="user-name">{{ user.fullName }}</span>
+          <span class="user-role">{{ user.role }}</span>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()" id="admin-btn-logout">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M6.5 15.5H3.5A1 1 0 012.5 14.5V3.5A1 1 0 013.5 2.5H6.5M12 12.5L15.5 9L12 5.5M15.5 9H6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span *ngIf="!sidebarCollapsed">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content" id="admin-main-content">
+    <header class="top-header" *ngIf="(user$ | async) as user">
+      <!-- Left side: Greeting & Quotes -->
+      <div class="top-greeting-box">
+        <div class="greeting-row">
+          <h1 class="greeting-text">{{ greeting }}, <span class="highlight">{{ user.fullName.split(' ')[0] }}</span> <span class="coffee-mug-icon">☕</span></h1>
+        </div>
+        <div class="quote-row">
+          <p class="rotating-quote" *ngFor="let quote of coffeeQuotes; let i = index" [class.active]="i === currentQuote">{{ quote }}</p>
+        </div>
+      </div>
+
+      <!-- Right side: Search and Cart -->
+      <div class="top-actions">
+        <div class="search-bar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="search-icon">
+            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16.5 16.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <input type="text" placeholder="Search products, orders..." class="search-input" />
+        </div>
+        
+        <button class="cart-btn" routerLink="/admin/orders">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" fill="currentColor"/>
+            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 21C20 21.5523 20.5523 22 20 22Z" fill="currentColor"/>
+            <path d="M1 1H5L7.68 14.39A2 2 0 009.64 16H19.4A2 2 0 0021.36 14.39L23 6H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="cart-badge">+</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating coffee bean particles -->
+    <div class="particle-field">
+      <div class="floating-item coffee-cup cup-1">☕</div>
+      <div class="floating-item coffee-cup cup-2">☕</div>
+      <div class="floating-item coffee-bean bean-1">🫘</div>
+      <div class="floating-item coffee-bean bean-2">🫘</div>
+      <div class="floating-item coffee-steam steam-particle">♨️</div>
+    </div>
+    <!-- Steam wisps from bottom -->
+    <div class="steam-field">
+      <div class="steam s1"></div>
+      <div class="steam s2"></div>
+      <div class="steam s3"></div>
+    </div>
+    <!-- Decorative coffee vine -->
+    <div class="vine-deco vine-top-right">🌿</div>
+    <div class="vine-deco vine-bottom-left">🍃</div>
+    
+    <div class="dashboard-content-layer" style="position: relative; z-index: 10;">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

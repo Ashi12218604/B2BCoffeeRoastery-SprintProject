@@ -1,0 +1,18 @@
+﻿  Determining projects to restore...
+  Restored C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.API\AuthService.API.csproj (in 2.68 sec).
+  4 of 5 projects are up-to-date for restore.
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.API\AuthService.API.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.Domain\AuthService.Domain.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.Application\AuthService.Application.csproj]
+C:\Program Files\dotnet\sdk\10.0.200-preview.0.26103.119\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.RuntimeIdentifierInference.targets(383,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\B2B.Contracts.csproj]
+  B2B.Contracts -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\Shared\B2B.Contracts\bin\Debug\net10.0\B2B.Contracts.dll
+  AuthService.Domain -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.Domain\bin\Debug\net10.0\AuthService.Domain.dll
+  AuthService.Application -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.Application\bin\Debug\net10.0\AuthService.Application.dll
+  AuthService.Infrastructure -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.Infrastructure\bin\Debug\net10.0\AuthService.Infrastructure.dll
+  AuthService.API -> C:\All semesters\Training\SprintProject\B2B_Coffee_ sq\AuthService\AuthService.API\bin\Debug\net10.0\AuthService.API.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:05.55

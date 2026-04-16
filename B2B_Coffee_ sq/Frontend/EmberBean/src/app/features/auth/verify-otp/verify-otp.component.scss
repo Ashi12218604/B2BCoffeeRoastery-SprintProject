@@ -1,0 +1,75 @@
+@use 'styles/variables' as *;
+@use 'styles/typography' as *;
+@use 'styles/glassmorphism' as *;
+@use 'styles/animations';
+
+:host { display: block; width: 100%; height: 100%; }
+
+.login-universe { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+.bg-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bg-image { background: url('/assets/images/hero-bg.png') center center / cover no-repeat; filter: brightness(0.4) saturate(1.2); }
+.bg-overlay { background: linear-gradient(135deg, rgba(13,13,13,0.9) 0%, rgba(26,26,26,0.7) 100%); }
+
+.top-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 10; padding: 28px 48px; }
+.nav-logo-text { @include heading-serif(1.4rem, 700); color: $copper; letter-spacing: 0.1em; text-decoration: none; }
+
+.register-container {
+  position: relative; z-index: 5; display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 100px 24px 40px;
+}
+
+.login-panel {
+  @include glass-panel; border-radius: $radius-xl;
+  padding: 48px 44px; width: 100%; max-width: 440px;
+  opacity: 0; animation: fadeInUp 0.7s $ease-smooth 0.3s forwards;
+  position: relative;
+  &::before {
+    content: ''; position: absolute; inset: -1px; border-radius: $radius-xl; padding: 1px;
+    background: linear-gradient(135deg, rgba(184,115,51,0.4), rgba(184,115,51,0.1) 50%, rgba(255,191,0,0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+  }
+}
+
+.panel-header { text-align: center; margin-bottom: 32px; }
+.panel-title { @include heading-serif($text-3xl, 600); color: $velvet-crema; margin-bottom: 8px; }
+.panel-subtitle { @include body-sans($text-sm, 400); color: $text-muted; line-height: 1.6; }
+.highlight-email { color: $copper; }
+
+.success-content { text-align: center; }
+.success-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(76,175,80,0.15); border: 2px solid rgba(76,175,80,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: #81C784; margin: 0 auto 20px;
+}
+
+.error-banner {
+  padding: 12px 16px; background: rgba(244,67,54,0.1); border: 1px solid rgba(244,67,54,0.25);
+  border-radius: $radius-md; margin-bottom: 20px; color: #EF5350;
+  @include body-sans($text-sm, 400); animation: fadeIn 0.3s ease;
+}
+
+.form-group { margin-bottom: 24px; }
+.form-label { @include label-sans($text-xs, 600); color: $text-secondary; letter-spacing: 0.15em; display: block; margin-bottom: 8px; }
+.input-wrapper {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: $radius-md; padding: 0 16px;
+  transition: all $duration-normal $ease-smooth;
+  &:focus-within { border-color: $amber-glow; box-shadow: $shadow-amber; }
+}
+.otp-input input { text-align: center; font-size: 2rem; letter-spacing: 0.5em; font-weight: 600; }
+
+input {
+  width: 100%; background: transparent; border: none; outline: none; color: $velvet-crema;
+  @include body-sans(1rem, 400); padding: 14px 0;
+  &::placeholder { color: $text-muted; font-weight: 300; }
+}
+
+.field-error { @include body-sans($text-xs, 400); color: #EF5350; margin-top: 6px; padding-left: 4px; }
+.btn-sign-in { @include copper-button; width: 100%; margin-top: 8px; font-size: 0.85rem; letter-spacing: 0.18em; padding: 16px 32px; text-decoration: none; }
+.spinner-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.spinner { width: 16px; height: 16px; border: 2px solid rgba(26,26,26,0.3); border-top: 2px solid $obsidian; border-radius: 50%; animation: spin 0.8s linear infinite; }
+.panel-footer { text-align: center; margin-top: 24px; }
+.register-text { @include body-sans($text-sm, 400); color: $text-muted; }

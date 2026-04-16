@@ -1,0 +1,192 @@
+// ═══════════════════════════════════════════════════════════
+// EMBER & BEAN — Global Styles (Living Roast Theme)
+// ═══════════════════════════════════════════════════════════
+@use 'styles/variables' as *;
+@use 'styles/typography' as *;
+@use 'styles/animations';
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @include body-sans;
+  background-color: $warm-parchment;
+  color: $espresso-wood;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+// Browser autofill override — warm parchment theme
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgba(253, 245, 230, 0.95) inset !important;
+  -webkit-text-fill-color: #3D2B1F !important;
+  box-shadow: 0 0 0 30px rgba(253, 245, 230, 0.95) inset !important;
+  caret-color: #3D2B1F;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+// Scrollbar Styling — warm wood tones
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $warm-parchment-dim;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 115, 51, 0.35);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(184, 115, 51, 0.55);
+  }
+}
+
+// Selection — amber highlight
+::selection {
+  background: rgba(255, 191, 0, 0.25);
+  color: $espresso-wood;
+}
+
+// Links
+a {
+  color: $copper;
+  text-decoration: none;
+  transition: color $duration-fast $ease-smooth;
+
+  &:hover {
+    color: $amber-ember;
+  }
+}
+
+// ── Custom "Brewing" Loader ──────────────────────────────
+.brew-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .brew-drop {
+    width: 12px;
+    height: 12px;
+    border-radius: 50% 50% 50% 0;
+    background: $copper;
+    transform: rotate(-45deg);
+    animation: coffeeDrop 1.2s ease-in-out infinite;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(184, 115, 51, 0.15);
+      animation: coffeeRipple 1.2s ease-in-out infinite;
+    }
+  }
+
+  .brew-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: $text-muted;
+    letter-spacing: 0.08em;
+  }
+}
+
+// ── Toast/Notification Styles ────────────────────────────
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  padding: 16px 24px;
+  border-radius: $radius-md;
+  backdrop-filter: blur(20px);
+  border: 1px solid;
+  animation: slideInRight 0.4s $ease-smooth forwards;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  min-width: 300px;
+  max-width: 450px;
+  box-shadow: $shadow-md;
+
+  &.toast-success {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: rgba(76, 175, 80, 0.25);
+    color: #2E7D32;
+  }
+
+  &.toast-error {
+    background: rgba(211, 47, 47, 0.08);
+    border-color: rgba(211, 47, 47, 0.25);
+    color: #C62828;
+  }
+
+  &.toast-warning {
+    background: rgba(255, 152, 0, 0.1);
+    border-color: rgba(255, 152, 0, 0.25);
+    color: #E65100;
+  }
+
+  &.toast-info {
+    background: rgba(41, 182, 246, 0.1);
+    border-color: rgba(41, 182, 246, 0.25);
+    color: #0277BD;
+  }
+}
+
+// ── Topographic Pattern (The Thread) ─────────────────────
+.topo-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image:
+    repeating-radial-gradient(
+      circle at 20% 30%,
+      transparent 0,
+      transparent 40px,
+      rgba(138, 154, 91, 0.3) 40px,
+      rgba(138, 154, 91, 0.3) 41px
+    ),
+    repeating-radial-gradient(
+      circle at 60% 70%,
+      transparent 0,
+      transparent 50px,
+      rgba(184, 115, 51, 0.2) 50px,
+      rgba(184, 115, 51, 0.2) 51px
+    ),
+    repeating-radial-gradient(
+      circle at 80% 20%,
+      transparent 0,
+      transparent 35px,
+      rgba(138, 154, 91, 0.25) 35px,
+      rgba(138, 154, 91, 0.25) 36px
+    );
+}
