@@ -30,7 +30,7 @@ tracking, and Gmail notifications at every step.
 | CQRS | MediatR 14 |
 | Messaging | MassTransit 8 + RabbitMQ |
 | Saga | MassTransit State Machine |
-| ORM | Entity Framework Core 9 |
+| ORM | Entity Framework Core 10 |
 | Database | SQL Server Express (Database-per-service) |
 | Gateway | Ocelot 23 |
 | Auth | JWT Bearer + BCrypt |
