@@ -123,20 +123,7 @@ cd ApiGateway && dotnet run
 ---
 
 ## 📁 Project Structure
-B2B_Coffee_ sq/
-├── Shared/
-│   └── B2B.Contracts/          # Integration events (the glue)
-├── AuthService/
-│   ├── AuthService.API/
-│   ├── AuthService.Application/
-│   ├── AuthService.Domain/
-│   └── AuthService.Infrastructure/
-├── ProductService/             # Same 4-layer structure
-├── InventoryService/
-├── OrderService/
-├── DeliveryService/
-├── NotificationService/
-└── ApiGateway/
+
 ---
 
 ## 🤖 AI Chatbot
@@ -145,9 +132,4 @@ product recommendations, order queries, and brewing guides.
 
 ---
 
-## 📄 License
-MIT License — Free to use for educational purposes.
 
----
-
-*Developed as Sprint Training Project — Phagwara, Punjab, India 2024*
